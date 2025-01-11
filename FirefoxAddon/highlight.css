@@ -1,0 +1,41 @@
+﻿/* highlight.css */
+.today-release {
+    background-color: #e0f7fa !important; /* Light cyan/turquoise */
+    transition: background-color 0.3s ease;
+}
+
+.recent-release {
+    background-color: #e3f2fd !important; /* Light blue */
+    transition: background-color 0.3s ease;
+}
+
+.today-release:hover {
+    background-color: #b2ebf2 !important; /* Slightly darker cyan on hover */
+}
+
+.recent-release:hover {
+    background-color: #bbdefb !important;
+}
+
+.new-marker {
+    display: inline-block;
+    margin-right: 5px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#torrent-controls {
+    margin-bottom: 10px;
+}
+
+#torrent-controls button {
+    transition: opacity 0.2s ease;
+}
+
+#torrent-controls button:hover {
+    opacity: 0.9;
+}
