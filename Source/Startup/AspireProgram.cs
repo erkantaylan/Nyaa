@@ -2,13 +2,15 @@ using Projects;
 
 namespace Startup;
 
-public class AspireStartup
+public class AspireProgram
 {
     public static void Main(string[] args)
     {
         IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-        AddDemos(builder);
+        builder.AddProject<Nyaa_Web>("web-nyaa");
+
+        //AddDemos(builder);
 
         builder.Build().Run();
     }

@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Nyaa.Web\Nyaa.Web.csproj" />
       <ProjectReference Include="..\Source.ApiService\Source.ApiService.csproj" />
       <ProjectReference Include="..\Source.Web\Source.Web.csproj" />
     </ItemGroup>
