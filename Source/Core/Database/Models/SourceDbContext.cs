@@ -10,6 +10,19 @@ public abstract class SourceDbContext<T> : DbContext
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
+        IEnumerable<object> createdEntires = ChangeTracker
+                                              .Entries()
+                                              .Where(x => x.State == EntityState.Added)
+                                              .Select(x => x.Entity);
+
+        foreach (object entry in createdEntires)
+        {
+            if (entry is IEntity auditableEntity)
+            {
+                auditableEntity.CreatedAt = DateTimeOffset.UtcNow;
+            }
+        }
+        
         IEnumerable<object> modifiedEntries = ChangeTracker
                                              .Entries()
                                              .Where(x => x.State == EntityState.Modified)

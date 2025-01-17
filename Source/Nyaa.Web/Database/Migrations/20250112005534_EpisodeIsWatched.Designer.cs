@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nyaa.Web.Database;
 
@@ -10,9 +11,11 @@ using Nyaa.Web.Database;
 namespace Nyaa.Web.Database.Migrations
 {
     [DbContext(typeof(NyaaDbContext))]
-    partial class NyaaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250112005534_EpisodeIsWatched")]
+    partial class EpisodeIsWatched
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");

@@ -1,7 +1,126 @@
 ﻿@page "/"
+@using Nyaa.Web.Database.Entities.Episode
+@inject IJSRuntime JsRuntime
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="container mt-4">
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Debug Information</h5>
+        </div>
+        <div class="card-body">
+            <p>Total Anime's: @animes.Count</p>
+            <p>Total Episodes: @animes.Sum(a => a.Anime.Episodes?.Count)</p>
 
-Welcome to your new app.
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" @bind="newAnimeName" placeholder="Enter anime name"/>
+                <button class="btn btn-primary" @onclick="AddAnimeAsync">Add Anime</button>
+            </div>
+        </div>
+    </div>
+
+    @foreach (PageAnime anime in animes)
+    {
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">@anime.Anime.Name</h5>
+                <span class="badge bg-primary">ID: @anime.Anime.Id</span>
+            </div>
+            <div class="card-body">
+                <!-- Anime Details -->
+                <div class="mb-3">
+                    <small class="text-muted">Created: @(anime.Anime.CreatedAt.ToString("F"))</small>
+                    <br/>
+                    @if (anime.Anime.UpdatedAt != null)
+                    {
+                        <small
+                            class="text-muted">Updated: @(anime.Anime.UpdatedAt.GetValueOrDefault().ToString("F"))</small>
+                    }
+                </div>
+
+                <!-- Episodes Table -->
+                <div class="table-responsive-xxl">
+                    <table class="table table-sm table-bordered">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Id #</th>
+                            <th>Episode #</th>
+                            <th>Full Name Name</th>
+                            <th>Source</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td></td>
+
+                            <td>
+                                <InputNumber @bind-Value="anime.Input.EpisodeNumber"/>
+                            </td>
+                            <td>
+                                <InputText @bind-Value="anime.Input.Name"/>
+                            </td>
+                            <td>
+                                <InputText @bind-Value="anime.Input.Source"/>
+                            </td>
+                            <td>
+                                <InputCheckbox @bind-Value="anime.Input.IsWatched"/>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" @onclick="(() => AddEpisode(anime))">Add</button>
+                            </td>
+                        </tr>
+
+                        @if (anime.Anime.Episodes != null)
+                        {
+                            foreach (EpisodeEntity episode in anime.Anime.Episodes.OrderBy(e => e.EpisodeNumber))
+                            {
+                                <tr>
+                                    <td>
+                                        <small>@episode.Id</small>
+                                    </td>
+                                    <td>@episode.EpisodeNumber</td>
+                                    <th>@episode.Name</th>
+                                    <th>
+                                        <a href="@episode.Source" target="_blank"
+                                           rel="noopener noreferrer">@episode.Source</a>
+                                    </th>
+                                    <td>
+                                        @{
+                                            if (episode.IsWatched)
+                                            {
+                                                <span class="badge bg-success">Watched</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning">Not Watched</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary">Watched</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    window.convertToLocalDateTime = (utcDate) => {
+        const date = new Date(utcDate);
+        return {
+            date: date.toLocaleDateString(),
+            time: date.toLocaleTimeString()
+        };
+    }
+</script>

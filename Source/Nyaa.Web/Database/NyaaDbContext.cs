@@ -8,10 +8,7 @@ namespace Nyaa.Web.Database;
 
 public class NyaaDbContext : SourceDbContext<NyaaDbContext>
 {
-    public NyaaDbContext(DbContextOptions<NyaaDbContext> options) : base(options)
-    {
-        Database.EnsureCreated();
-    }
+    public NyaaDbContext(DbContextOptions<NyaaDbContext> options) : base(options) { }
 
     public DbSet<AnimeEntity> Animes { get; set; }
     public DbSet<EpisodeEntity> Episodes { get; set; }

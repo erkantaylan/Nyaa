@@ -4,7 +4,7 @@ using Nyaa.Web.Database.Entities.Anime;
 
 namespace Nyaa.Web.Database.Entities.Episode;
 
-public sealed class EpisodeEntity : EntityBase<long>
+public class EpisodeEntity : EntityBase<long>
 {
     public required long AnimeId { get; set; }
 
@@ -15,6 +15,8 @@ public sealed class EpisodeEntity : EntityBase<long>
     public required string Source { get; set; }
 
     public required int EpisodeNumber { get; set; }
-
+    
+    public bool IsWatched { get; set; }
+    
     public AnimeEntity? Anime { get; set; }
 }
